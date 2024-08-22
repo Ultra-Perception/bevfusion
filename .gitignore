@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Models and data
+models/*
+data/*
+runs/*
+
+# torch hipify generated files
+*_hip.*
+*.hip
