@@ -1,7 +1,7 @@
 
 import torch
 
-from . import feature_decorator_ext
+from . import feature_decorator_ext # comment for a circular import error
 
 
 __all__ = ["feature_decorator"]
