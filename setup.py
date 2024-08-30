@@ -19,7 +19,11 @@ def make_cuda_ext(
             "-D__CUDA_NO_HALF_OPERATORS__",
             "-D__CUDA_NO_HALF_CONVERSIONS__",
             "-D__CUDA_NO_HALF2_OPERATORS__",
-            "-gencode=arch=compute_61,code=sm_61", # 增加一个支持P40算力架构的gencode
+            "-gencode=arch=compute_61,code=sm_61",
+            "-gencode=arch=compute_70,code=sm_70",
+            "-gencode=arch=compute_75,code=sm_75",
+            "-gencode=arch=compute_80,code=sm_80",
+            "-gencode=arch=compute_86,code=sm_86",
         ]
         sources += sources_cuda
     elif (torch.cuda.is_available() and torch.version.hip is not None) or os.getenv("FORCE_ROCM", "0") == 1:
@@ -162,6 +166,13 @@ if __name__ == "__main__":
                 sources=["src/gather_points_cpu.cpp"],
                 sources_cuda=["src/gather_points_cuda.cu"],
             ),
+            make_cuda_ext(
+                name="feature_decorator_ext",
+                module="mmdet3d.ops.feature_decorator",
+                sources=["src/feature_decorator.cpp"],
+                sources_cuda=["src/feature_decorator_cuda.cu"],
+            )
+
         ],
         cmdclass={"build_ext": BuildExtension},
         zip_safe=False,
